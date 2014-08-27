@@ -101,15 +101,14 @@ app.post('/api/customers/:group_by/', function(req, res, next) {
 
 
 
-
 app.post('/api/login/', function(req, res, next) {
   var user = req.body['user'];
-  var password_hash = sha256(req.body['password']);
   var login = db.collection('login');
   login.findOne(function(err, result) {
     if (err) throw err;
-
-    if (user==result['user'] && password_hash==result['password'] ){
+    var salt = result['salt'];
+    var password_hash = sha256(req.body['password']+salt);
+    if (user==result['user'] && password_hash==result['hashed_salted_pass'] ){
       var token = guid();
       console.log('Auth granted. Token ' + token);
       var tokens = db.collection('tokens');

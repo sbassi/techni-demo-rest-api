@@ -4,7 +4,6 @@ from bottle import post, request, route, template, HTTPError, run, response
 import subprocess
 import hashlib
 import pymongo
-import pdb
 import uuid
 import json
 import os
@@ -14,14 +13,14 @@ from bson.code import Code
 @post('/api/v1.0/login/')
 @post('/api/login/')
 def login():
-    #pdb.set_trace()
     user = request.json['user']
     password = request.json['password']
-    password_hash = hashlib.sha256(password).hexdigest()
     conn = pymongo.MongoClient()
     db = conn['techdb']
     rec = db.login.find_one()
-    if user==rec["user"] and password_hash==rec["password"]:
+    salt = rec['salt']
+    password_hash = hashlib.sha256(password+salt).hexdigest()
+    if user==rec["user"] and password_hash==rec["hashed_salted_pass"]:
         token = str(uuid.uuid4())
         db.tokens.save({"token":token})
         conn.close()
