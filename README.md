@@ -18,25 +18,25 @@ Clone github project::
 
 clone https://github.com/sbassi/techni-demo-rest-api.git
 
-Install dependencies::
+Install dependencies:
 
 npm install
 
-Run the program::
+Run the program:
 
 node main.js
 
 Running tests
 -------------
 
-Install tests dependencies::
+Install tests dependencies:
 
 pip install -r requirements.txt
 
-Setting local environment::
+Setting local environment:
 
 edit testsettings.py
 
-Run tests::
+Run tests:
 
 ./tests.py
