@@ -24,13 +24,13 @@ var guid = (function() {
 
 
 app.get('/', function(req, res, next) {
-  res.send('please select a collection, e.g., /collections/messages')
+  res.send('please use the API according to the documentation')
 })
 
-app.post('/api/customers/:sort_by/:order/:from?/:to?', function(req, res, next) {
+app.get('/api/customers/:sort_by/:order/:from?/:to?', function(req, res, next) {
 
   // check if logged in
-  var token = req.body['token'];
+  var token = req.headers['x-token'];
   var tokens = db.collection('tokens');
 
   tokens.findOne({"token":token}, function(err, result) {
@@ -72,15 +72,15 @@ app.post('/api/customers/:sort_by/:order/:from?/:to?', function(req, res, next) 
 })
 
 
-app.post('/api/customers/:group_by/', function(req, res, next) {
+app.get('/api/customers/:group_by/', function(req, res, next) {
 
-  var token = req.body['token'];
+  var token = req.headers['x-token'];
   var tokens = db.collection('tokens');
-
+  
   tokens.findOne({"token":token}, function(err, result) {
     if (err) throw err;
     if (token==result['token']){
-      console.log('auth');
+      console.log('authorized');
 
       var customers = db.collection('customers');
       var groupBy = req.params.group_by;
