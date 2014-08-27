@@ -9,7 +9,9 @@ DB Setup
 You need to setup a MongoDB database with the default login information. Note that is a salted password and the salt is present on user document. MongoDB commands:
 
   use techdb
+  
   a = {user:"admin", hashed_salted_pass:"9ed2e5ee854f75e802b5008e67756f88a84df7642ed7ed2ed2e5639749564ab1", salt:"5639f8c0-01ea-4c53-85a2-dff4e80717c1"}
+  
   db.login.insert(a)
 
 Install NodeJS program
