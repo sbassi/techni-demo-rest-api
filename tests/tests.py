@@ -13,11 +13,13 @@ import testsettings as settings
 class ApiTests(unittest.TestCase):
 
     def setUp(self):
+        # TO DO:
+        # Load data for the test so testing is performed with fake data
         pass
 
     def test_login(self):
         values = {'user' : settings.USER, 'password' : settings.PASSWORD}
-        req = urllib2.Request(settings.BASEURL+"/api/login/", 
+        req = urllib2.Request("%s/api/login/"%settings.BASEURL, 
                               json.dumps(values), 
                               {'Content-Type': 'application/json'})
         token = urllib2.urlopen(req).read()
@@ -30,7 +32,7 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(token,stored_token)
 
     def test_status(self):
-    	req = urllib2.Request(settings.BASEURL+"/api/status/")
+    	req = urllib2.Request("%s/api/status/"%settings.BASEURL)
         status_result = urllib2.urlopen(req).read()
         result_dict = ast.literal_eval(status_result)
         # Check if response has the expected keys
